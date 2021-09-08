@@ -1,5 +1,5 @@
-const Rules = () => {
-  return <div>Rules</div>;
+const Roles = () => {
+  return <div>Roles</div>;
 };
 
-export default Rules;
+export default Roles;
