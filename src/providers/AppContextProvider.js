@@ -7,6 +7,13 @@ export const AppActions = {
   CHANGE_STEP: "CHANGE_STEP",
 };
 
+export const changeStep = (payload) => {
+	return {
+		payload,
+		type: AppActions.CHANGE_STEP,
+	};
+};
+
 const initialState = {
   step: steps.welcome,
   form: {
