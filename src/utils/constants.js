@@ -1,7 +1,7 @@
 const steps = {
   welcome: 0,
-  role: 1,
-  invite: 2,
+  roles: 1,
+  invites: 2,
   dxp: 3,
 };
 
