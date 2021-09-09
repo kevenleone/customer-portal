@@ -1,0 +1,41 @@
+* {
+  font-family: "Source Sans Pro";
+}
+
+.input-group-item {
+  margin-left: 2rem;
+}
+
+.input-group:not(:last-child) { 
+  margin-bottom: 2rem;  
+}
+
+.form-control {
+  height: 3rem;
+  padding: 0.75rem 1rem;
+  font-weight: bold;
+}
+
+.form-control::placeholder {
+  font-weight: bold;
+  color: #A7A3B2;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.card-content {
+  width: 600px;
+  height: 678px;
+}
+
+p {
+  line-height: 24px;
+}
+
+main {
+  height: 470px;
+  overflow-y: auto;
+}
