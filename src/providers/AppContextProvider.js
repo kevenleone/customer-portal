@@ -1,17 +1,19 @@
 import { createContext, useReducer } from "react";
-import { steps } from "../utils/constants";
+import { initialInvite } from "../utils";
+import { rolesId, steps } from "../utils/constants";
 
 const AppContext = createContext();
 
 export const AppActions = {
   CHANGE_STEP: "CHANGE_STEP",
+  UPDATE_INVITES: "UPDATE_INVITES"
 };
 
 export const changeStep = (payload) => {
-	return {
-		payload,
-		type: AppActions.CHANGE_STEP,
-	};
+  return {
+    payload,
+    type: AppActions.CHANGE_STEP,
+  };
 };
 
 const initialState = {
@@ -19,10 +21,9 @@ const initialState = {
   form: {
     roleId: 0,
     invites: [
-      {
-        email: "",
-        roleId: 0,
-      },
+      initialInvite(rolesId.creator),
+      initialInvite(rolesId.watcher),
+      initialInvite(rolesId.watcher)
     ],
     setUpDxp: {
       projectId: "",
@@ -47,7 +48,17 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case AppActions.CHANGE_STEP: {
       return {
+        ...state,
         step: action.payload,
+      };
+    }
+    case AppActions.UPDATE_INVITES: {
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          invites: action.payload
+        },
       };
     }
     default: {
