@@ -5,6 +5,7 @@
   "dependencies": {
     "@clayui/core": "^3.35.2",
     "@clayui/css": "^3.35.2",
+    "@clayui/form": "^3.35.2",
     "@clayui/layout": "^3.32.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
