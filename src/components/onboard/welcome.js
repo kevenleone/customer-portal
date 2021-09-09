@@ -19,7 +19,7 @@ const Welcome = () => {
         subtitle: "",
       }}
     >
-      <div className="align-items-center d-flex flex-column justify-content-center mb-5">
+      <div className="align-items-center d-flex flex-column justify-content-center">
         <img
           height={300}
           width={392}
@@ -29,7 +29,7 @@ const Welcome = () => {
           className="mt-5 mb-4"
         />
 
-        <p className="text-dark text-center px-2 mx-5 mb-3">
+        <p className="text-dark text-center px-2 mx-5">
           Let’s download your DXP activation keys, add any team members to your
           projects and give you a quick tour of the space.
         </p>
