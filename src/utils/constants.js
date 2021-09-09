@@ -5,22 +5,28 @@ const steps = {
   dxp: 3,
 };
 
-const roles = {
-  admin: {
+const rolesId = {
+  admin: 1,
+  creator: 2,
+  watcher: 3
+}
+
+const roles = [
+  {
     id: 1,
     name: "Administrator",
     icon: "TDB",
   },
-  ticketCreator: {
+  {
     id: 2,
     name: "Ticket Creator",
     icon: "TDB",
   },
-  ticketWatcher: {
+  {
     id: 3,
     name: "Ticket Watcher",
     icon: "TDB",
   },
-};
+];
 
-export { steps, roles };
+export { steps, roles, rolesId };
