@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppActions, AppContext, changeStep } from "../../providers/AppContextProvider";
 import ClayForm, { ClayInput, ClaySelect } from '@clayui/form';
 import { roles, rolesId, steps } from "../../utils/constants";
@@ -32,7 +32,11 @@ const HorizontalInputs = ({ id, invite }) => {
 
 const Invites = () => {
     const [state, dispatch] = useContext(AppContext);
+    const [isClicked, setIsClicked] = useState(false);
+
     const addInitialInvite = () => {
+        setIsClicked(true);
+
         dispatch({
             type: AppActions.UPDATE_INVITES,
             payload: [...state.form.invites, initialInvite(rolesId.watcher)]
@@ -50,13 +54,17 @@ const Invites = () => {
                 subtitle: "Team members will receive an email invitation to access this project on Customer Portal.",
             }}
         >
-            <ClayForm.Group className="m-0 invites-form">
-                {state.form.invites.map((invite, index) => (<HorizontalInputs key={index} id={index} invite={invite} />))}
-            </ClayForm.Group>
-            <BaseButton preffixIcon="plus" styles="text-primary py-2 mt-3" text="Add More Members" onClick={() => addInitialInvite()} />
-            <hr />
-            <div className="h6 font-weight-normal">
-                Only 3 members per project (including yourself) have role permissions (Admins & Developers) to open Support tickets.
+            <div className="invites-form px-4 pb-3">
+                <ClayForm.Group className="m-0">
+                    {state.form.invites.map((invite, index) => (<HorizontalInputs key={index} id={index} invite={invite} />))}
+                </ClayForm.Group>
+                <BaseButton disabled={state.form.invites.length > 5} preffixIcon="plus" styles="text-primary py-2 mt-3" text="Add More Members" onClick={() => addInitialInvite()} />
+            </div>
+            <div className={`px-4 ${isClicked ? "bottom-content" : ""}`}>
+                <hr className={`mt-0 ${isClicked ? "invisible" : ""}`} />
+                <div className="text-content">
+                    Only 3 members per project (including yourself) have role permissions (Admins & Requestors) to open Support tickets.
+                </div>
             </div>
         </Layout>
     );

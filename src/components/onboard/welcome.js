@@ -19,7 +19,7 @@ const Welcome = () => {
         subtitle: "",
       }}
     >
-      <div className="align-items-center d-flex flex-column justify-content-center">
+      <div className="align-items-center d-flex flex-column justify-content-center px-4">
         <img
           height={300}
           width={392}
