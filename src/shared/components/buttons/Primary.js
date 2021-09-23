@@ -8,4 +8,4 @@ const PrimaryButton = ({ onClick, text }) => {
     );
 }
 
-export default PrimaryButton
+export default PrimaryButton;
