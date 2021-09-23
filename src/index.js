@@ -1,17 +1,45 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import AppContextProvider from "./providers/AppContextProvider";
-import spritemap from "./assets/icons.svg";
-import { ClayIconSpriteContext } from '@clayui/icon';
-import "./styles/global.scss";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Onboarding from './apps/onboarding';
+import Providers from './shared/providers';
+import onboardingStyles from './apps/onboarding/styles/app.scss';
 
-import App from "./pages/App";
+const TAG_NAME = 'onboarding-web';
 
-ReactDOM.render(
-  <ClayIconSpriteContext.Provider value={spritemap}>
-    <AppContextProvider>
-      <App />
-    </AppContextProvider>
-  </ClayIconSpriteContext.Provider>,
-  document.getElementById("root")
-);
+class WebComponent extends HTMLElement {
+  constructor(App, appStyleSass, properties = {}) {
+    super();
+
+    this.App = App;
+    this.appStyleSass = appStyleSass;
+    this.properties = properties;
+    this.styleSass = document.createElement('style');
+    this.mountPoint = document.createElement('div');
+    this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    this.styleSass.textContent = this.appStyleSass;
+    this.shadowRoot.appendChild(this.styleSass);
+    this.shadowRoot.appendChild(this.mountPoint);
+
+    const App = this.App;
+
+    ReactDOM.render(
+      <Providers>
+        <App {...this.properties} />
+      </Providers>,
+      this.mountPoint
+    );
+  }
+}
+
+class OnboardingComponent extends WebComponent {
+  constructor() {
+    super(Onboarding, onboardingStyles);
+  }
+}
+
+if (!customElements.get(TAG_NAME)) {
+  customElements.define(TAG_NAME, OnboardingComponent);
+}
