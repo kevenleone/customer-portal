@@ -1,5 +1,5 @@
-import Header from "./header";
-import Footer from "./footer";
+import Header from "./components/header";
+import Footer from "./components/footer";
 
 const Layout = ({ children, headerProps, footerProps }) => (
   <div className="border border-light card-content col-4 d-flex flex-column mt-5 mx-auto rounded shadow p-0">

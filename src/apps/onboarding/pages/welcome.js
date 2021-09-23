@@ -1,9 +1,10 @@
 import { useContext } from "react";
-import Intro from "../../assets/intro.svg";
-import { AppContext, changeStep } from "../../providers/AppContextProvider";
-import { steps } from "../../utils/constants";
-import PrimaryButton from "../shared/components/buttons/primaryButton";
-import Layout from "../shared/layout";
+import { PrimaryButton } from "../../../shared/components/buttons";
+import Intro from "../assets/intro.svg";
+import { AppContext } from "../context";
+import { changeStep } from "../context/actions";
+import { steps } from "../utils/constants";
+import Layout from "./layout";
 
 const Welcome = () => {
   const [, dispatch] = useContext(AppContext);
@@ -11,7 +12,7 @@ const Welcome = () => {
   return (
     <Layout
       footerProps={{
-        middleButton: <PrimaryButton text={"Get Started"} onClick={() => dispatch(changeStep(steps.roles))} />
+        middleButton: <PrimaryButton text={"Get Started"} onClick={() => dispatch(changeStep(steps.invites))} />
       }}
       headerProps={{
         intro: "Hello Sarah,",

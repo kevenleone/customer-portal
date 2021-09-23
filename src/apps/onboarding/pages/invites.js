@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import { AppActions, AppContext, changeStep } from "../../providers/AppContextProvider";
 import ClayForm, { ClayInput, ClaySelect } from '@clayui/form';
-import { roles, rolesId, steps } from "../../utils/constants";
-import PrimaryButton from "../shared/components/buttons/primaryButton";
-import Layout from "../shared/layout";
-import BaseButton from "../shared/components/buttons/baseButton";
-import { initialInvite } from "../../utils";
+import { roles, rolesId, steps } from "../utils/constants";
+import { AppContext } from "../context";
+import { ActionTypes, changeStep } from "../context/actions";
+import { initialInvite } from "../utils";
+import { BaseButton, PrimaryButton } from "../../../shared/components/buttons";
+import Layout from "./layout";
 
 const HorizontalInputs = ({ id, invite }) => {
     return (
@@ -38,7 +38,7 @@ const Invites = () => {
         setIsClicked(true);
 
         dispatch({
-            type: AppActions.UPDATE_INVITES,
+            type: ActionTypes.UPDATE_INVITES,
             payload: [...state.form.invites, initialInvite(rolesId.watcher)]
         });
     }

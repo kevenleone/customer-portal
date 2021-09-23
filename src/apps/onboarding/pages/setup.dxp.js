@@ -1,11 +1,11 @@
 import ClayForm, { ClayInput, ClaySelect } from '@clayui/form';
-import { roles } from "../../utils/constants";
-import PrimaryButton from "../shared/components/buttons/primaryButton";
-import Layout from "../shared/layout";
-import BaseButton from "../shared/components/buttons/baseButton";
 import { useContext } from 'react';
-import { AppActions, AppContext } from '../../providers/AppContextProvider';
-import { initialDxpAdmin } from '../../utils';
+import { BaseButton, PrimaryButton } from '../../../shared/components/buttons';
+import { AppContext } from '../context';
+import { ActionTypes } from '../context/actions';
+import { initialDxpAdmin } from '../utils';
+import { roles } from '../utils/constants';
+import Layout from './layout';
 
 const HorizontalInputs = ({ id, admin }) => {
     return (
@@ -36,7 +36,7 @@ const SetupDXP = () => {
 
     const addInitialAdmin = () => {
         dispatch({
-            type: AppActions.UPDATE_ADMINS,
+            type: ActionTypes.UPDATE_ADMINS,
             payload: [...state.form.setUpDxp.admins, initialDxpAdmin()]
         });
     }
