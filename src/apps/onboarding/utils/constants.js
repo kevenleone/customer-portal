@@ -1,8 +1,7 @@
 const steps = {
   welcome: 0,
-  roles: 1,
-  invites: 2,
-  dxp: 3,
+  invites: 1,
+  dxp: 2,
 };
 
 const rolesId = {
