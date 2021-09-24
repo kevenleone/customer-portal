@@ -1,45 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Onboarding from './apps/onboarding';
-import Providers from './shared/providers';
-import onboardingStyles from './apps/onboarding/styles/app.scss';
+import { getApps } from '~/apps';
+import kebabize from '~/shared/utils/kebabize'
 
-const TAG_NAME = 'onboarding-web';
+const TAG_PROJECT = "cp";
+const apps = getApps();
 
-class WebComponent extends HTMLElement {
-  constructor(App, appStyleSass, properties = {}) {
-    super();
+const getTagName = (componentName) => {
+  return TAG_PROJECT + "-" + kebabize(componentName);
+};
 
-    this.App = App;
-    this.appStyleSass = appStyleSass;
-    this.properties = properties;
-    this.styleSass = document.createElement('style');
-    this.mountPoint = document.createElement('div');
-    this.attachShadow({ mode: 'open' });
+apps.forEach(app => {
+  const tagName = getTagName(app.name);
+
+  if (!customElements.get(tagName)) {
+    customElements.define(tagName, app);
   }
-
-  connectedCallback() {
-    this.styleSass.textContent = this.appStyleSass;
-    this.shadowRoot.appendChild(this.styleSass);
-    this.shadowRoot.appendChild(this.mountPoint);
-
-    const App = this.App;
-
-    ReactDOM.render(
-      <Providers>
-        <App {...this.properties} />
-      </Providers>,
-      this.mountPoint
-    );
-  }
-}
-
-class OnboardingComponent extends WebComponent {
-  constructor() {
-    super(Onboarding, onboardingStyles);
-  }
-}
-
-if (!customElements.get(TAG_NAME)) {
-  customElements.define(TAG_NAME, OnboardingComponent);
-}
+});
