@@ -13,7 +13,7 @@ const App = () => {
 
 class Onboarding extends WebComponent {
 	constructor() {
-		super(App,onboardingStyles);
+		super(App, onboardingStyles);
 	}
 }
 

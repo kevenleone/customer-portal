@@ -1,12 +1,9 @@
-export const ActionTypes = {
-    CHANGE_STEP: "CHANGE_STEP",
-    UPDATE_INVITES: "UPDATE_INVITES",
-    UPDATE_ADMINS: "UPDATE_ADMINS"
+import { action, actionType } from "~/shared/context/actions";
+
+const actionTypes = actionType("ONBOARDING", ["CHANGE_STEP"]);
+
+const changeStep = (payload) => {
+    return action(actionTypes.CHANGE_STEP, payload);
 };
 
-export const changeStep = (payload) => {
-    return {
-        payload,
-        type: ActionTypes.CHANGE_STEP,
-    };
-};
+export { actionTypes, changeStep }

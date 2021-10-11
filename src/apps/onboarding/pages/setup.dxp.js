@@ -1,98 +1,108 @@
-import ClayForm, { ClayInput, ClaySelect } from '@clayui/form';
-import { useContext } from 'react';
-import { BaseButton, PrimaryButton } from '../../../shared/components/buttons';
-import { AppContext } from '../context';
-import { ActionTypes } from '../context/actions';
-import { initialDxpAdmin } from '../utils';
-import { roles } from '../utils/constants';
+import ClayForm, { ClayInput } from '@clayui/form';
+import { useFormikContext } from 'formik';
+import { useContext } from "react";
+import Input from '~/shared/components/Input';
+import Select from '~/shared/components/Select';
+import { AppContext } from '../context'
+import { getInitialDxpAdmin, getRolesList } from '../utils/constants';
 import Layout from './layout';
+import BaseButton from "~/shared/components/BaseButton";
 
-const HorizontalInputs = ({ id, admin }) => {
+const AdminInputs = ({ id }) => {
     return (
-        <>
-            <hr />
-            <div className="dxp-form">
-                <label htmlFor="adminEmail">System Admin’s Email Address</label>
-                <ClayInput className="bg-white rounded-lg border border-1" placeholder="username@superbank.com" type="email" id="adminEmail" />
-            </div>
-            <ClayInput.Group>
-                <ClayInput.GroupItem>
-                    <label htmlFor="adminFirstName">System Admin’s First Name</label>
-                    <ClayInput className="bg-white rounded-lg border border-1" type="text" id="adminFirstName" />
+        <ClayForm.Group className="mb-0 pb-1">
+            <hr className="mb-4 mt-4 mx-3" />
+            <Input label="System Admin’s Email Address" name={`admins[${id}].email`} placeholder="username@superbank.com" type="email" groupStyle="pt-1" required />
+            <ClayInput.Group className="mb-0">
+                <ClayInput.GroupItem className="m-0">
+                    <Input label="System Admin’s First Name" name={`admins[${id}].firstName`} type="text" required />
                 </ClayInput.GroupItem>
-                <ClayInput.GroupItem>
-                    <label htmlFor="adminLastName">System Admin’s Last Name</label>
-                    <ClayInput className="bg-white rounded-lg border border-1" type="text" id="adminLastName" />
+                <ClayInput.GroupItem className="m-0">
+                    <Input label="System Admin’s Last Name" name={`admins[${id}].lastName`} type="text" required />
                 </ClayInput.GroupItem>
             </ClayInput.Group>
-            <label htmlFor="adminGithub">System Admin’s Github Username</label>
-            <ClayInput className="bg-white rounded-lg border border-1" type="text" id="adminGithub" />
-        </>
+            <Input label="System Admin’s Github Username" name={`admins[${id}].github`} type="text" groupStyle="mb-0" required />
+        </ClayForm.Group>
     );
 }
 
 const SetupDXP = () => {
-    const [state, dispatch] = useContext(AppContext);
+    const [state] = useContext(AppContext);
+    const { values, setFieldValue, errors } = useFormikContext();
 
-    const addInitialAdmin = () => {
-        dispatch({
-            type: ActionTypes.UPDATE_ADMINS,
-            payload: [...state.form.setUpDxp.admins, initialDxpAdmin()]
-        });
-    }
+    console.log(errors);
 
     return (
         <Layout
             footerProps={{
-                leftButton: <BaseButton text={"Skip for now"} onClick={() => console.log('Skipped')} />,
-                middleButton: <PrimaryButton text={"Submit"} onClick={() => console.log("Lambda, Labda!")} />
+                leftButton: (
+                    <BaseButton
+                        borderless
+                        onClick={() => console.log("Skipped")}
+                    >
+                        Skip for now
+                    </BaseButton>
+                ),
+                middleButton: (
+                    <BaseButton
+                        displayType="primary"
+                        onClick={() => console.log("Send it!")}
+                    >
+                        Submit
+                    </BaseButton>
+                ),
             }}
             headerProps={{
                 title: "Set up DXP Cloud",
-                subtitle: "We’ll need a few details to finish building your DXP environment(s).",
+                helper:
+                    "We’ll need a few details to finish building your DXP environment(s).",
             }}
+            mainStyles="pl-3 pt-1"
         >
-            <div className="px-4 h-100">
-                <div className="d-flex justify-content-between dxp">
-                    <div>
-                        <div className="title-dxp mb-1">
-                            Organization Name
-                        </div>
-                        <div className="content-dxp">
-                            {state.dxp.organization}
-                        </div>
-                    </div>
-                    <div className="dxp-version">
-                        <div className="title-dxp mb-1">
-                            Liferay DXP Version
-                        </div>
-                        <div className="content-dxp">
-                            {state.dxp.version}
-                        </div>
-                    </div>
+            <div className="d-flex justify-content-between mb-2 pb-1 pl-3">
+                <div className="flex-fill">
+                    <label>Organization Name</label>
+                    <p className="text-neutral-3 text-paragraph-lg">
+                        <strong>{state.dxp.organization}</strong>
+                    </p>
                 </div>
-                <ClayForm.Group className="m-0">
-                    <div className="dxp-form">
-                        <label htmlFor="projectId">Project ID</label>
-                        <ClayInput className="bg-white rounded-lg border border-1" placeholder="superbank1" type="text" id="projectId" />
-                        <div className="text-content ml-3 mt-1">
-                            Lowercase letters and numbers only. Project IDs cannot be changed.
-                        </div>
-                    </div>
-                    <label htmlFor="inviteRole">Primary Data Center Region</label>
-                    <ClaySelect className="bg-white rounded-lg border border-1" aria-label="Select Region" id="inviteRole">
-                        {roles.map(item => (
-                            <ClaySelect.Option
-                                key={item.id}
-                                label={item.name}
-                                value={item.id}
-                            />
-                        ))}
-                    </ClaySelect>
-                    {state.form.setUpDxp.admins.map((admin, index) => (<HorizontalInputs key={index} id={index} admin={admin} />))}
-                </ClayForm.Group>
-                <BaseButton preffixIcon="plus" styles="text-primary py-2 my-3" text="Add Another Admin" onClick={() => addInitialAdmin()} />
+                <div className="flex-fill">
+                    <label>Liferay DXP Version</label>
+                    <p className="text-neutral-3 text-paragraph-lg">
+                        <strong>{state.dxp.version}</strong>
+                    </p>
+                </div>
             </div>
+            <ClayForm.Group className="mb-0">
+                <ClayForm.Group className="mb-0 pb-1">
+                    <Input label="Project ID" helper="Lowercase letters and numbers only. Project IDs cannot be change." name="dxp.projectId" placeholder="superbank1" type="text" groupStyle="pb-1" required />
+                    <Select
+                        name="dxp.dataCenterRegion"
+                        label="Primary Data Center Region"
+                        options={getRolesList().map((option) => (
+                            {
+                                label: option.name,
+                                value: option.id
+                            }
+                        ))}
+                        required
+                        groupStyle="mb-0"
+                    />
+                </ClayForm.Group>
+
+                {values.dxp.admins.map((admin, index) => (
+                    <AdminInputs id={index} key={index} />
+                ))}
+            </ClayForm.Group>
+            <BaseButton
+                onClick={() => setFieldValue("dxp.admins", [...values.dxp.admins, getInitialDxpAdmin()])}
+                prependIcon="plus"
+                className="ml-3 my-2 text-brand-primary"
+                small
+                borderless
+            >
+                Add Another Admin
+            </BaseButton>
         </Layout>
     );
 };

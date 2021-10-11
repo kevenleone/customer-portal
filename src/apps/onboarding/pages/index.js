@@ -12,6 +12,7 @@ const Pages = () => {
         case steps.invites: {
             return <Invites />;
         }
+
         case steps.dxp: {
             return <SetupDXP />
         }

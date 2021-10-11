@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PrimaryButton } from "../../../shared/components/buttons";
+import BaseButton from "~/shared/components/BaseButton";
 import Intro from "../assets/intro.svg";
 import { AppContext } from "../context";
 import { changeStep } from "../context/actions";
@@ -12,29 +12,34 @@ const Welcome = () => {
   return (
     <Layout
       footerProps={{
-        middleButton: <PrimaryButton text={"Get Started"} onClick={() => dispatch(changeStep(steps.invites))} />
+        middleButton: (
+          <BaseButton
+            displayType="primary"
+            onClick={() => dispatch(changeStep(steps.invites))}
+          >
+            Get Started
+          </BaseButton>
+        ),
       }}
       headerProps={{
-        intro: "Hello Sarah,",
+        greetings: "Hello Sarah,",
         title: "Welcome to Liferay’s Customer Portal",
-        subtitle: "",
       }}
+      mainStyles="align-items-center d-flex flex-column pt-4 px-6"
     >
-      <div className="align-items-center d-flex flex-column justify-content-center px-4">
-        <img
-          height={300}
-          width={392}
-          alt="Costumer Service Intro"
-          draggable={false}
-          src={Intro}
-          className="mt-5 mb-4"
-        />
+      <img
+        alt="Costumer Service Intro"
+        className="mb-4 pb-1"
+        draggable={false}
+        height={300}
+        src={Intro}
+        width={391.58}
+      />
 
-        <p className="text-dark text-center px-2 mx-5">
-          Let’s download your DXP activation keys, add any team members to your
-          projects and give you a quick tour of the space.
-        </p>
-      </div>
+      <p className="mb-0 px-1 text-neutral-2 text-center">
+        Let’s download your DXP activation keys, add any team members to your
+        projects and give you a quick tour of the space.
+      </p>
     </Layout>
   );
 };

@@ -9,7 +9,7 @@ class WebComponent extends HTMLElement {
 		this.StylesProvider = StylesProvider;
 		this.properties = properties;
 		this.styleSass = document.createElement('style');
-		this.mountPoint = document.createElement('div');
+		this.mountPoint = document.createElement('component');
 
 		this.attachShadow({ mode: 'open' });
 	}
